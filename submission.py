@@ -45,7 +45,17 @@ class ExactInference(object):
 
     def observe(self, agentX, agentY, observedDist):
         # BEGIN_YOUR_CODE (around 10 lines of code expected)
-        raise Exception("Not implemented yet")
+        # raise Exception("Not implemented yet")
+        for row in range(self.belief.getNumRows()):
+            for col in range(self.belief.getNumCols()):
+                posterior = self.belief.getProb(row,col)
+                Y = util.rowToY(row)
+                X = util.colToX(col)
+                mean = ((agentX - X)**2 + (agentY - Y)**2)**(1/2)
+                cond = util.pdf(mean,Const.SONAR_STD,observedDist)
+                newPosterior = posterior*cond
+                self.belief.setProb(row,col,newPosterior)
+        self.belief.normalize()
         # END_YOUR_CODE
 
     ############################################################
