@@ -51,7 +51,7 @@ class ExactInference(object):
                 posterior = self.belief.getProb(row,col)
                 Y = util.rowToY(row)
                 X = util.colToX(col)
-                mean = ((agentX - X)**2 + (agentY - Y)**2)**(1/2)
+                mean = math.sqrt((agentX - X)**2 + (agentY - Y)**2)
                 cond = util.pdf(mean,Const.SONAR_STD,observedDist)
                 newPosterior = posterior*cond
                 self.belief.setProb(row,col,newPosterior)
