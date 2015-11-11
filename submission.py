@@ -79,19 +79,20 @@ class ExactInference(object):
         if self.skipElapse: return ### ONLY FOR THE GRADER TO USE IN Problem 2
         # BEGIN_YOUR_CODE (around 10 lines of code expected)
         # raise Exception("Not implemented yet")
-        print self.transProb
-        for row in range(self.belief.getNumRows()):
-            for col in range(self.belief.getNumCols()):
-                oldTile = (row,col)
-                posterior = self.belief.getProb(row,col)
-                newPosterior = 0
-                for i in range(row-1,row+1):
-                    for j in range(col-1,col+1):
-                        if i != row and j != col:
-                            newTile = (i,j)
-                            product = self.transProb[oldTile][newTile]*posterior
-                            newPosterior = newPosterior + product     
-                self.belief.setProb(row,col,newPosterior)
+        newSum = {}
+        for key in self.transProb:
+            oldTile = key[0]
+            newTile = key[1]
+            posterior = self.belief.getProb(oldTile[0],oldTile[1])
+            transition = self.transProb[key]
+            product = transition*posterior
+            if oldTile in newSum:
+                newSum[oldTile] = newSum[oldTile] + product
+            else:
+                newSum[oldTile] = product
+        for key in self.transProb:
+            oldTile = key[0]
+            self.belief.setProb(oldTile[0],oldTile[1],newSum[oldTile])
         self.belief.normalize()
         # END_YOUR_CODE
       
