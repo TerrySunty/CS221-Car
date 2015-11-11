@@ -179,12 +179,7 @@ class ParticleFilter(object):
         # raise Exception("Not implemented yet")
         particleDict = collections.Counter()
         for particle in self.particles:
-            if particle in particleDict:
-                particleDict[particle] = particleDict[particle] + 1
-            else:
-                particleDict[particle] = 1
-        for particle in particleDict:
-            posterior = particleDict[particle]
+            posterior = self.particles[particle]
             row = particle[0]
             col = particle[1]
             Y = util.rowToY(row)
