@@ -183,16 +183,16 @@ class ParticleFilter(object):
                 particleDict[particle] = particleDict[particle] + 1
             else:
                 particleDict[particle] = 1
-        for particle in self.particles:
-            posterior = particleDict[particle]/self.NUM_PARTICLES
+        for particle in particleDict:
+            posterior = particleDict[particle]
             row = particle[0]
             col = particle[1]
             Y = util.rowToY(row)
             X = util.colToX(col)
             mean = math.sqrt((agentX - X)**2 + (agentY - Y)**2)
             cond = util.pdf(mean,Const.SONAR_STD,observedDist)
-            newPosterior = posterior*cond
-            self.belief.setProb(row,col,newPosterior)
+            newPosterior = posterior*cond/self.NUM_PARTICLES
+            particleDict[particle] = newPosterior
         self.particles = collections.Counter()
         for i in range(self.NUM_PARTICLES):
             newParticle = util.weightedRandomChoice(particleDict)
