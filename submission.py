@@ -217,7 +217,17 @@ class ParticleFilter(object):
     ############################################################
     def elapseTime(self):
         # BEGIN_YOUR_CODE (around 10 lines of code expected)
-        raise Exception("Not implemented yet")
+        # raise Exception("Not implemented yet")
+        newParticles = collections.Counter()
+        for tile in self.particles:
+            for i in range(self.particles[tile]):
+                nextParticle = util.weightedRandomChoice(self.particles)
+                transProb = self.transProbDict[tile][nextParticle]
+                if nextParticle in newParticles:
+                    newParticles[nextParticle] = newParticles[nextParticle] + transProb 
+                else:
+                    newParticles[nextParticle] = transProb
+        self.particles = newParticles
         # END_YOUR_CODE
         
     # Function: Get Belief
