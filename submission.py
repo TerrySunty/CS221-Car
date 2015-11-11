@@ -176,7 +176,7 @@ class ParticleFilter(object):
     ############################################################
     def observe(self, agentX, agentY, observedDist):
         # BEGIN_YOUR_CODE (around 15 lines of code expected)
-        raise Exception("Not implemented yet")
+        # raise Exception("Not implemented yet")
         # END_YOUR_CODE
         self.updateBelief()
     
