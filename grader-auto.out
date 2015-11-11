@@ -6,7 +6,7 @@
             'extraCredit': False,
             'maxPoints': 0,
             'maxSeconds': 5,
-            'messages': ["File 'writeup.pdf' does not exist"],
+            'messages': [],
             'name': 'writeupValid',
             'points': 0,
             'seconds': 0},
