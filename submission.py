@@ -177,7 +177,7 @@ class ParticleFilter(object):
     def observe(self, agentX, agentY, observedDist):
         # BEGIN_YOUR_CODE (around 15 lines of code expected)
         # raise Exception("Not implemented yet")
-        particleDict = {}
+        particleDict = collections.Counter()
         for particle in self.particles:
             if particle in particleDict:
                 particleDict[particle] = particleDict[particle] + 1
@@ -191,13 +191,12 @@ class ParticleFilter(object):
             X = util.colToX(col)
             mean = math.sqrt((agentX - X)**2 + (agentY - Y)**2)
             cond = util.pdf(mean,Const.SONAR_STD,observedDist)
-            newPosterior = posterior*cond/self.NUM_PARTICLES
+            newPosterior = posterior*cond
             particleDict[particle] = newPosterior
         self.particles = collections.Counter()
         for i in range(self.NUM_PARTICLES):
             newParticle = util.weightedRandomChoice(particleDict)
             self.particles[newParticle] += 1
-        #self.belief.normalize()
         # END_YOUR_CODE
         self.updateBelief()
     
