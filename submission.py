@@ -78,7 +78,19 @@ class ExactInference(object):
     def elapseTime(self):
         if self.skipElapse: return ### ONLY FOR THE GRADER TO USE IN Problem 2
         # BEGIN_YOUR_CODE (around 10 lines of code expected)
-        raise Exception("Not implemented yet")
+        # raise Exception("Not implemented yet")
+        for row in range(self.belief.getNumRows()):
+            for col in range(self.belief.getNumCols()):
+                oldTile = (row,col)
+                posterior = self.belief.getProb(row,col)
+                newPosterior = 0
+                for i in range(row-1,row+1):
+                    for j in range(col-1,col+1):
+                        if i != row and j != col and i >= 0 and j >= 0 and i < self.belief.getNumRows() and j < self.belief.getNumCols():
+                            newTile = (i,j)
+                            newPosterior = newPosterior + self.transProb(oldTile,newTile)*posterior     
+                self.belief.setProb(row,col,newPosterior)
+        self.belief.normalize()
         # END_YOUR_CODE
       
     # Function: Get Belief
